@@ -1,8 +1,10 @@
 import * as exampleGame from './games/example.js';
 import * as chimpGame from './games/chimp.js';
+import * as ospanGame from './games/ospan.js';
 
 const GAMES = {
   'chimp-test': chimpGame,
+  'ospan': ospanGame,
   'example-game': exampleGame,
 };
 

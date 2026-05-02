@@ -1,0 +1,200 @@
+export const icon = '🧮';
+export const title = 'Operation Span';
+export const description = 'Solve equations, memorise letters, recall them in order.';
+
+// Standard OSPAN consonant pool (12 letters)
+const POOL = ['F', 'H', 'J', 'K', 'L', 'N', 'P', 'Q', 'R', 'S', 'T', 'Y'];
+const LETTER_MS = 1000;
+
+let el = null;
+let span = 2;
+let round = 0;
+let letters = [];
+let equations = [];
+let recalled = [];
+let totalScore = 0;
+let maxPossible = 0;
+let phase = 'idle';
+
+// ── helpers ──────────────────────────────────────────────────────────────────
+
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function makeEquation() {
+  const a = randInt(2, 9), b = randInt(2, 9), c = randInt(1, 9);
+  const op = Math.random() < 0.5 ? '+' : '−';
+  const correct = op === '+' ? a * b + c : a * b - c;
+  const isTrue = Math.random() < 0.5;
+  const shown = isTrue ? correct : correct + (Math.random() < 0.5 ? 1 : -1) * randInt(1, 3);
+  return { text: `(${a} × ${b}) ${op} ${c} = ${shown}`, answer: isTrue };
+}
+
+// ── render helpers ────────────────────────────────────────────────────────────
+
+function renderIdle() {
+  phase = 'idle';
+  el.innerHTML = `
+    <p class="ospan-hint">
+      Each turn: solve an equation (TRUE / FALSE), then memorise a letter.<br>
+      When the round ends, recall all the letters <strong>in order</strong>.
+    </p>
+    ${totalScore > 0 ? `<p class="ospan-score">Score so far: ${totalScore} / ${maxPossible}</p>` : ''}
+    <button class="btn" id="ospan-start">Start — Span ${span}</button>
+  `;
+  el.querySelector('#ospan-start').addEventListener('click', startSpan);
+}
+
+function renderEquation() {
+  phase = 'equation';
+  const eq = equations[round];
+  el.innerHTML = `
+    <div class="ospan-meta">Item ${round + 1} of ${span}</div>
+    <div class="ospan-eq">${eq.text}</div>
+    <p class="ospan-eq-label">Is this correct?</p>
+    <div class="ospan-tf-row">
+      <button class="btn ospan-tf ospan-tf--true"  id="ospan-true">TRUE</button>
+      <button class="btn ospan-tf ospan-tf--false" id="ospan-false">FALSE</button>
+    </div>
+  `;
+  el.querySelector('#ospan-true').addEventListener('click',  () => answerEq(true));
+  el.querySelector('#ospan-false').addEventListener('click', () => answerEq(false));
+}
+
+function renderLetter() {
+  phase = 'letter';
+  el.innerHTML = `
+    <div class="ospan-meta">Memorise:</div>
+    <div class="ospan-big-letter">${letters[round]}</div>
+  `;
+  setTimeout(() => {
+    if (phase !== 'letter') return;
+    round++;
+    round < span ? renderEquation() : renderRecall();
+  }, LETTER_MS);
+}
+
+function renderRecall() {
+  phase = 'recall';
+  recalled = [];
+
+  const btnHtml = POOL.map(l =>
+    `<button class="ospan-lbtn" data-l="${l}">${l}</button>`
+  ).join('');
+
+  el.innerHTML = `
+    <div class="ospan-meta">Recall the ${span} letters in order:</div>
+    <div class="ospan-slots" id="ospan-slots">${slots()}</div>
+    <div class="ospan-lgrid">${btnHtml}</div>
+    <div class="ospan-recall-actions">
+      <button class="ospan-clear" id="ospan-clear">Clear</button>
+      <button class="btn" id="ospan-submit" disabled>Submit</button>
+    </div>
+  `;
+
+  el.querySelectorAll('.ospan-lbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (recalled.length >= span) return;
+      recalled.push(btn.dataset.l);
+      btn.classList.add('is-used');
+      btn.disabled = true;
+      el.querySelector('#ospan-slots').innerHTML = slots();
+      if (recalled.length === span) el.querySelector('#ospan-submit').disabled = false;
+    });
+  });
+
+  el.querySelector('#ospan-clear').addEventListener('click', () => {
+    recalled = [];
+    el.querySelectorAll('.ospan-lbtn').forEach(b => { b.classList.remove('is-used'); b.disabled = false; });
+    el.querySelector('#ospan-slots').innerHTML = slots();
+    el.querySelector('#ospan-submit').disabled = true;
+  });
+
+  el.querySelector('#ospan-submit').addEventListener('click', submitRecall);
+}
+
+function slots() {
+  return letters.map((_, i) =>
+    `<span class="ospan-slot${recalled[i] ? ' is-filled' : ''}">${recalled[i] ?? '?'}</span>`
+  ).join('');
+}
+
+function renderFeedback() {
+  phase = 'feedback';
+  const letterCorrect = letters.filter((l, i) => recalled[i] === l).length;
+  const eqCorrect = equations.filter(eq => eq.userAnswer === eq.answer).length;
+  totalScore += letterCorrect;
+  maxPossible += span;
+
+  const allRight = letterCorrect === span;
+
+  const seqHtml = letters.map((l, i) => {
+    const hit = recalled[i] === l;
+    return `<span class="ospan-seq ${hit ? 'is-hit' : 'is-miss'}" title="you typed: ${recalled[i] ?? '—'}">${l}</span>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="ospan-meta">Span ${span} results</div>
+    <div class="ospan-fb-row">
+      <span>Letters <strong>${letterCorrect}/${span}</strong></span>
+      <span>Equations <strong>${eqCorrect}/${span}</strong></span>
+    </div>
+    <div class="ospan-seq-row">${seqHtml}</div>
+    ${allRight
+      ? `<p class="ospan-advance">Level up → Span ${span + 1}</p>`
+      : `<p class="ospan-hint" style="margin-bottom:16px">Total score: ${totalScore} / ${maxPossible}</p>`
+    }
+    <button class="btn" id="ospan-next">${allRight ? 'Continue' : 'Try Again'}</button>
+  `;
+
+  if (allRight) span++;
+
+  el.querySelector('#ospan-next').addEventListener('click', () => {
+    if (!allRight) { span = 2; totalScore = 0; maxPossible = 0; }
+    renderIdle();
+  });
+}
+
+// ── game flow ─────────────────────────────────────────────────────────────────
+
+function startSpan() {
+  letters = shuffle(POOL).slice(0, span);
+  equations = Array.from({ length: span }, makeEquation);
+  round = 0;
+  recalled = [];
+  renderEquation();
+}
+
+function answerEq(answer) {
+  equations[round].userAnswer = answer;
+  renderLetter();
+}
+
+function submitRecall() {
+  renderFeedback();
+}
+
+// ── lifecycle ─────────────────────────────────────────────────────────────────
+
+export function mount(mountEl) {
+  el = mountEl;
+  span = 2;
+  totalScore = 0;
+  maxPossible = 0;
+  phase = 'idle';
+  renderIdle();
+}
+
+export function unmount() {
+  el = null;
+}
