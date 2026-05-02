@@ -8,7 +8,8 @@
   --text: #e0e0f0;
   --text-muted: #9a9ab0;
   --radius: 10px;
-  --border: #333;
+  --border: #4a4860;
+  --focus-ring: #a09af0;
 }
 
 body {
@@ -121,7 +122,7 @@ body {
 .btn:focus-visible,
 .back-link:focus-visible,
 .nav-logo:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
