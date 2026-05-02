@@ -1,0 +1,99 @@
+{
+  "nodes": [
+    {
+      "id": "router_js",
+      "label": "router.js",
+      "file_type": "code",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "router_renderhome",
+      "label": "renderHome()",
+      "file_type": "code",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L12"
+    },
+    {
+      "id": "router_rendergame",
+      "label": "renderGame()",
+      "file_type": "code",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L35"
+    },
+    {
+      "id": "router_route",
+      "label": "route()",
+      "file_type": "code",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L58"
+    }
+  ],
+  "edges": [
+    {
+      "source": "router_js",
+      "target": "home_zhionfr_fun_sim_games_example_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "router_js",
+      "target": "router_renderhome",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "router_js",
+      "target": "router_rendergame",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "router_js",
+      "target": "router_route",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "router_rendergame",
+      "target": "router_renderhome",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "router_route",
+      "target": "router_renderhome",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "router_route",
+      "target": "router_rendergame",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L63",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

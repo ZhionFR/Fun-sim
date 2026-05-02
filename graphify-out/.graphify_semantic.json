@@ -1,0 +1,292 @@
+{
+  "nodes": [
+    {
+      "id": "home_zhionfr_fun_sim_router_js",
+      "label": "router.js",
+      "file_type": "code",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "router_renderhome",
+      "label": "renderHome()",
+      "file_type": "code",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L12"
+    },
+    {
+      "id": "router_rendergame",
+      "label": "renderGame()",
+      "file_type": "code",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L35"
+    },
+    {
+      "id": "router_route",
+      "label": "route()",
+      "file_type": "code",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L58"
+    },
+    {
+      "id": "index_html",
+      "label": "index.html (Mental Gym entry point)",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mental_gym_app",
+      "label": "Mental Gym",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "line 6",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "router_js",
+      "label": "router.js (ES module router)",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "line 15",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "style_css",
+      "label": "style.css (stylesheet)",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "line 7",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "nav_breadcrumb",
+      "label": "#nav-breadcrumb (navigation breadcrumb element)",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "line 12",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "content_main",
+      "label": "#content (main content mount point)",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "line 14",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mental_gym_design_spec",
+      "label": "Mental Gym Design Spec (2026-05-02)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-05-02-mental-gym-design.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mental_gym_plan",
+      "label": "Mental Gym Plan (2026-05-02)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-05-02-mental-gym.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_zhionfr_fun_sim_router_js",
+      "target": "home_zhionfr_fun_sim_games_example_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_zhionfr_fun_sim_router_js",
+      "target": "router_renderhome",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "home_zhionfr_fun_sim_router_js",
+      "target": "router_rendergame",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "home_zhionfr_fun_sim_router_js",
+      "target": "router_route",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "router_rendergame",
+      "target": "router_renderhome",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "router_route",
+      "target": "router_renderhome",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "router_route",
+      "target": "router_rendergame",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/zhionfr/Fun-sim/router.js",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "index_html",
+      "target": "router_js",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "line 15",
+      "weight": 1.0
+    },
+    {
+      "source": "index_html",
+      "target": "style_css",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "line 7",
+      "weight": 1.0
+    },
+    {
+      "source": "index_html",
+      "target": "mental_gym_app",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "line 6",
+      "weight": 1.0
+    },
+    {
+      "source": "router_js",
+      "target": "nav_breadcrumb",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "index.html",
+      "source_location": "line 12",
+      "weight": 0.8
+    },
+    {
+      "source": "router_js",
+      "target": "content_main",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "index.html",
+      "source_location": "line 14",
+      "weight": 0.85
+    },
+    {
+      "source": "mental_gym_plan",
+      "target": "mental_gym_design_spec",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/superpowers/plans/2026-05-02-mental-gym.md",
+      "source_location": null,
+      "weight": 0.75
+    },
+    {
+      "source": "mental_gym_design_spec",
+      "target": "mental_gym_app",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/superpowers/specs/2026-05-02-mental-gym-design.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "mental_gym_plan",
+      "target": "mental_gym_app",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/superpowers/plans/2026-05-02-mental-gym.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "mental_gym_design_spec",
+      "target": "mental_gym_plan",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "docs/superpowers/specs/2026-05-02-mental-gym-design.md",
+      "source_location": null,
+      "weight": 0.8
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "mental_gym_spa_structure",
+      "label": "Mental Gym SPA shell: index.html wires router.js and style.css together as a single-page app",
+      "nodes": [
+        "index_html",
+        "router_js",
+        "style_css"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "index.html"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
