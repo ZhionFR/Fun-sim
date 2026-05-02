@@ -4,10 +4,11 @@
   --bg: #0f0f1a;
   --surface: #1a1a2e;
   --surface-2: #2a2a3e;
-  --accent: #6c63ff;
+  --accent: #5a52e0;
   --text: #e0e0f0;
-  --text-muted: #888;
+  --text-muted: #9a9ab0;
   --radius: 10px;
+  --border: #333;
 }
 
 body {
@@ -24,7 +25,7 @@ body {
   gap: 8px;
   padding: 16px 24px;
   background: var(--surface);
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--border);
 }
 
 .nav-logo {
@@ -65,7 +66,7 @@ body {
 
 .game-card {
   background: var(--surface-2);
-  border: 1px solid #333;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px;
   cursor: pointer;
@@ -116,12 +117,20 @@ body {
 
 .back-link:hover { color: var(--text); }
 
+.game-card:focus-visible,
+.btn:focus-visible,
+.back-link:focus-visible,
+.nav-logo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 /* Shared button */
 .btn {
   background: var(--accent);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius);
   padding: 12px 32px;
   font-size: 1em;
   cursor: pointer;
