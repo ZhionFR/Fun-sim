@@ -1,6 +1,8 @@
 import * as exampleGame from './games/example.js';
+import * as chimpGame from './games/chimp.js';
 
 const GAMES = {
+  'chimp-test': chimpGame,
   'example-game': exampleGame,
 };
 

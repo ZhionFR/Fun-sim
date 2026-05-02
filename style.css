@@ -139,3 +139,78 @@ body {
 }
 
 .btn:hover { opacity: 0.85; }
+
+/* Chimp Test */
+.chimp-hint {
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.chimp-meta {
+  color: var(--text-muted);
+  font-size: 0.85em;
+  margin-bottom: 12px;
+}
+
+.chimp-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  max-width: 340px;
+  margin: 0 auto 16px;
+}
+
+.chimp-cell {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  background: var(--surface);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+  font-weight: 700;
+  color: var(--text);
+  transition: background 0.1s, border-color 0.1s;
+  user-select: none;
+}
+
+.chimp-cell:hover {
+  border-color: var(--border);
+}
+
+.chimp-cell.is-lit {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.chimp-cell.is-clicked {
+  background: #2e7d32;
+  border-color: #2e7d32;
+}
+
+.chimp-cell.is-win {
+  background: #2e7d32;
+  border-color: #2e7d32;
+}
+
+.chimp-cell.is-wrong {
+  background: #c62828;
+  border-color: #c62828;
+}
+
+.chimp-status {
+  color: var(--text-muted);
+  font-size: 0.85em;
+  min-height: 20px;
+}
+
+.chimp-result {
+  font-size: 1.3em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.chimp-result--fail { color: #ef5350; }
