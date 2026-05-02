@@ -2,12 +2,11 @@ export const icon = '🎯';
 export const title = 'Example Game';
 export const description = 'A placeholder. Click the button!';
 
-let clicks = 0;
-let mounted = false;
+let teardown = () => {};
 
 export function mount(el) {
-  clicks = 0;
-  mounted = true;
+  let clicks = 0;
+  let active = true;
 
   function render() {
     el.innerHTML = `
@@ -15,15 +14,18 @@ export function mount(el) {
       <button class="btn" id="example-btn">Click me!</button>
     `;
     el.querySelector('#example-btn').addEventListener('click', () => {
-      if (!mounted) return;
+      if (!active) return;
       clicks++;
       render();
     });
   }
 
+  teardown();
+  teardown = () => { active = false; };
   render();
 }
 
 export function unmount() {
-  mounted = false;
+  teardown();
+  teardown = () => {};
 }
