@@ -25,7 +25,7 @@ function gridSize(lvl) {
 function renderIdle() {
   el.innerHTML = `
     <p class="vismem-hint">Each round replays the full sequence with one new square added.<br>Repeat the entire order by clicking.</p>
-    <button class="btn" id="ordseq-start">Start — Level ${level}</button>
+    <button class="btn" id="ordseq-start">Start</button>
   `;
   el.querySelector('#ordseq-start').addEventListener('click', startLevel);
 }
@@ -125,7 +125,7 @@ function onCellClick(e) {
     phase = 'idle';
     level++;
     el.querySelectorAll('.vismem-cell').forEach(c => c.classList.add('is-win'));
-    setTimeout(() => renderIdle(), 700);
+    setTimeout(() => startLevel(), 500);
   } else {
     el.querySelector('.chimp-status').textContent = `Step ${clickIndex + 1} of ${level}`;
   }
