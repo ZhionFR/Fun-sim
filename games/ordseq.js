@@ -2,7 +2,7 @@ export const icon = '🔢';
 export const title = 'Ordered Sequence Memory';
 export const description = 'Each level extends the previous sequence by one square — remember it all from the start.';
 
-const BASE_COLS = 5;
+const BASE_COLS = 4;
 const BASE_ROWS = 4;
 const FLASH_MS = 500;
 const GAP_MS = 150;
@@ -70,7 +70,8 @@ function renderGrid() {
 
 function startLevel() {
   const { total } = gridSize(level);
-  const available = [...Array(total).keys()].filter(i => !sequence.includes(i));
+  const last = sequence.length > 0 ? sequence[sequence.length - 1] : -1;
+  const available = [...Array(total).keys()].filter(i => i !== last);
   sequence.push(available[Math.floor(Math.random() * available.length)]);
   clickIndex = 0;
   phase = 'showing';
