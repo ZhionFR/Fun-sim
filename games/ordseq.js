@@ -13,11 +13,8 @@ let sequence = [];   // grows cumulatively across levels
 let clickIndex = 0;
 let phase = 'idle';  // idle | showing | playing | fail
 
-function gridSize(lvl) {
-  const extra = Math.floor((lvl - 1) / 5);
-  const cols = BASE_COLS + extra;
-  const rows = BASE_ROWS + extra;
-  return { cols, rows, total: cols * rows };
+function gridSize() {
+  return { cols: BASE_COLS, rows: BASE_ROWS, total: BASE_COLS * BASE_ROWS };
 }
 
 // ── render ───────────────────────────────────────────────────────────────────
@@ -45,7 +42,7 @@ function renderFail() {
 }
 
 function renderGrid() {
-  const { cols, total } = gridSize(level);
+  const { cols, total } = gridSize();
 
   const cells = Array(total).fill(null).map((_, i) =>
     `<div class="vismem-cell" data-i="${i}"></div>`
@@ -69,7 +66,7 @@ function renderGrid() {
 // ── game logic ────────────────────────────────────────────────────────────────
 
 function startLevel() {
-  const { total } = gridSize(level);
+  const { total } = gridSize();
   const last = sequence.length > 0 ? sequence[sequence.length - 1] : -1;
   const available = [...Array(total).keys()].filter(i => i !== last);
   sequence.push(available[Math.floor(Math.random() * available.length)]);
