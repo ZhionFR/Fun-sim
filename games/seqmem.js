@@ -38,7 +38,6 @@ function renderFail() {
   `;
   el.querySelector('#seqmem-retry').addEventListener('click', () => {
     level = 1;
-    sequence = [];
     phase = 'idle';
     renderIdle();
   });
@@ -70,8 +69,7 @@ function renderGrid() {
 
 function startLevel() {
   const { total } = gridSize(level);
-  // append one new random cell to the existing sequence (Simon-style growth)
-  sequence.push(Math.floor(Math.random() * total));
+  sequence = Array.from({ length: level }, () => Math.floor(Math.random() * total));
   clickIndex = 0;
   phase = 'showing';
   renderGrid();
@@ -145,7 +143,6 @@ function triggerFail() {
 export function mount(mountEl) {
   el = mountEl;
   level = 1;
-  sequence = [];
   phase = 'idle';
   renderIdle();
 }
