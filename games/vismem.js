@@ -2,10 +2,17 @@ export const icon = '🧩';
 export const title = 'Visual Memory';
 export const description = 'Squares flash on a grid — remember which ones lit up and click them all.';
 
-const COLS = 5;
-const ROWS = 4;
-const TOTAL = COLS * ROWS;
+const BASE_COLS = 5;
+const BASE_ROWS = 4;
 const FLASH_MS = 1200;
+
+// Grid grows by 1 col + 1 row every 5 levels gained (level starts at 3)
+function gridSize(lvl) {
+  const extra = Math.floor((lvl - 3) / 5);
+  const cols = BASE_COLS + extra;
+  const rows = BASE_ROWS + extra;
+  return { cols, rows, total: cols * rows };
+}
 
 let el = null;
 let level = 3;       // number of squares to remember
@@ -45,7 +52,9 @@ function renderFail() {
 }
 
 function renderGrid(opts = {}) {
-  const cells = Array(TOTAL).fill(null).map((_, i) => {
+  const { cols, total } = gridSize(level);
+
+  const cells = Array(total).fill(null).map((_, i) => {
     const isLit = litCells.includes(i);
     const isClicked = clicked.includes(i);
 
@@ -68,7 +77,7 @@ function renderGrid(opts = {}) {
 
   el.innerHTML = `
     <div class="chimp-meta">Level ${level} &mdash; ${level} squares</div>
-    <div class="vismem-grid">${cells}</div>
+    <div class="vismem-grid" style="grid-template-columns: repeat(${cols}, 1fr)">${cells}</div>
     <div class="chimp-status">${statusText}</div>
   `;
 
@@ -80,7 +89,8 @@ function renderGrid(opts = {}) {
 // ── game logic ────────────────────────────────────────────────────────────────
 
 function startLevel() {
-  litCells = shuffle([...Array(TOTAL).keys()]).slice(0, level);
+  const { total } = gridSize(level);
+  litCells = shuffle([...Array(total).keys()]).slice(0, level);
   clicked = [];
   phase = 'showing';
   renderGrid();
