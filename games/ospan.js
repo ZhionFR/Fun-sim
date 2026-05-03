@@ -5,8 +5,10 @@ export const description = 'Solve equations, memorise letters, recall them in or
 // Standard OSPAN consonant pool (12 letters)
 const POOL = ['F', 'H', 'J', 'K', 'L', 'N', 'P', 'Q', 'R', 'S', 'T', 'Y'];
 const LETTER_MS = 1000;
+const EQUATION_MS = 2000;
 
 let el = null;
+let equationTimer = null;
 let span = 2;
 let round = 0;
 let letters = [];
@@ -66,9 +68,25 @@ function renderEquation() {
       <button class="btn ospan-tf ospan-tf--true"  id="ospan-true">TRUE</button>
       <button class="btn ospan-tf ospan-tf--false" id="ospan-false">FALSE</button>
     </div>
+    <div class="ospan-timer-bar">
+      <div class="ospan-timer-fill" id="ospan-timer-fill"></div>
+    </div>
   `;
   el.querySelector('#ospan-true').addEventListener('click',  () => answerEq(true));
   el.querySelector('#ospan-false').addEventListener('click', () => answerEq(false));
+
+  const fill = el.querySelector('#ospan-timer-fill');
+  const start = performance.now();
+  equationTimer = setInterval(() => {
+    const elapsed = performance.now() - start;
+    const ratio = Math.max(0, 1 - elapsed / EQUATION_MS);
+    fill.style.width = `${ratio * 100}%`;
+    if (elapsed >= EQUATION_MS) {
+      clearInterval(equationTimer);
+      equationTimer = null;
+      answerEq(false);
+    }
+  }, 50);
 }
 
 function renderLetter() {
@@ -176,6 +194,7 @@ function startSpan() {
 }
 
 function answerEq(answer) {
+  if (equationTimer) { clearInterval(equationTimer); equationTimer = null; }
   equations[round].userAnswer = answer;
   renderLetter();
 }
@@ -196,5 +215,6 @@ export function mount(mountEl) {
 }
 
 export function unmount() {
+  if (equationTimer) { clearInterval(equationTimer); equationTimer = null; }
   el = null;
 }
