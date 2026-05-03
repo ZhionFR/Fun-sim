@@ -12,7 +12,7 @@
   --focus-ring: #a09af0;
 }
 
-[data-theme="light"] {
+:root[data-theme="light"] {
   --bg:        #f4f5fb;
   --surface:   #ffffff;
   --surface-2: #ebecf5;
@@ -58,22 +58,39 @@ body {
 
 #theme-toggle {
   margin-left: auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
   background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+  color: #f59e0b;
   cursor: pointer;
-  padding: 6px 10px;
-  font-size: 1em;
   display: flex;
   align-items: center;
-  line-height: 1;
-  transition: border-color 0.15s, color 0.15s;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+:root[data-theme="light"] #theme-toggle {
+  color: var(--accent);
 }
 
 #theme-toggle:hover {
-  color: var(--text);
-  border-color: var(--text-muted);
+  background: var(--surface-2);
+  border-color: currentColor;
+  transform: scale(1.1);
+}
+
+@keyframes theme-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.82); }
+  70%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+#theme-toggle.is-toggling {
+  animation: theme-pop 0.3s ease;
 }
 
 /* Home card grid */
