@@ -113,6 +113,8 @@ function onCellClick(e) {
     return;
   }
 
+  cellEl.classList.add('is-clicked');
+  setTimeout(() => cellEl.classList.remove('is-clicked'), 300);
   cellEl.removeEventListener('click', onCellClick);
   clickIndex++;
 
