@@ -70,7 +70,8 @@ function renderGrid() {
 
 function startLevel() {
   const { total } = gridSize(level);
-  sequence.push(Math.floor(Math.random() * total));
+  const available = [...Array(total).keys()].filter(i => !sequence.includes(i));
+  sequence.push(available[Math.floor(Math.random() * available.length)]);
   clickIndex = 0;
   phase = 'showing';
   renderGrid();
