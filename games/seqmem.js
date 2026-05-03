@@ -69,7 +69,12 @@ function renderGrid() {
 
 function startLevel() {
   const { total } = gridSize(level);
-  sequence = Array.from({ length: level }, () => Math.floor(Math.random() * total));
+  const pool = [...Array(total).keys()];
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  sequence = pool.slice(0, level);
   clickIndex = 0;
   phase = 'showing';
   renderGrid();
