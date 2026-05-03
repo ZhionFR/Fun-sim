@@ -273,6 +273,55 @@ body {
 
 .chimp-result--fail { color: #ef5350; }
 
+/* Visual Memory */
+.vismem-hint {
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.vismem-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  max-width: 340px;
+  margin: 0 auto 16px;
+}
+
+.vismem-cell {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  background: var(--surface);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s;
+  user-select: none;
+}
+
+.vismem-cell:hover {
+  border-color: var(--border);
+}
+
+.vismem-cell.is-lit {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.vismem-cell.is-clicked {
+  background: #2e7d32;
+  border-color: #2e7d32;
+}
+
+.vismem-cell.is-win {
+  background: #2e7d32;
+  border-color: #2e7d32;
+}
+
+.vismem-cell.is-wrong {
+  background: #c62828;
+  border-color: #c62828;
+}
+
 /* Operation Span */
 .ospan-hint {
   color: var(--text-muted);
