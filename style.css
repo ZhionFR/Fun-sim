@@ -474,6 +474,40 @@ body {
   text-decoration: underline;
 }
 
+/* Lights Out */
+.lo-grid {
+  display: grid;
+  gap: 5px;
+  max-width: 360px;
+  margin: 0 auto 16px;
+}
+
+.lo-cell {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.08s, box-shadow 0.08s, border-color 0.08s;
+  user-select: none;
+}
+
+.lo-cell:hover {
+  border-color: var(--focus-ring);
+}
+
+.lo-cell.is-on {
+  background: #f5c842;
+  border-color: #f5c842;
+  box-shadow: 0 0 10px rgba(245, 200, 66, 0.55);
+}
+
+.lo-hint {
+  color: var(--text-muted);
+  font-size: 0.85em;
+  margin-top: 4px;
+}
+
 .ospan-clear:hover { color: var(--text); }
 
 .ospan-fb-row {

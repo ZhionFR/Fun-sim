@@ -4,6 +4,7 @@ import * as ospanGame from './games/ospan.js';
 import * as vismemGame from './games/vismem.js';
 import * as seqmemGame from './games/seqmem.js';
 import * as ordseqGame from './games/ordseq.js';
+import * as lightsoutGame from './games/lightsout.js';
 
 const GAMES = {
   'chimp-test': chimpGame,
@@ -11,6 +12,7 @@ const GAMES = {
   'visual-memory': vismemGame,
   'sequence-memory': seqmemGame,
   'ordered-sequence': ordseqGame,
+  'lights-out': lightsoutGame,
   'example-game': exampleGame,
 };
 
