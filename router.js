@@ -6,6 +6,7 @@ import * as seqmemGame from './games/seqmem.js';
 import * as ordseqGame from './games/ordseq.js';
 import * as lightsoutGame from './games/lightsout.js';
 import * as mentalGame from './games/mental.js';
+import * as mentalHardGame from './games/mental-hard.js';
 
 const GAMES = {
   'chimp-test': chimpGame,
@@ -15,6 +16,7 @@ const GAMES = {
   'ordered-sequence': ordseqGame,
   'lights-out': lightsoutGame,
   'mental-calculus': mentalGame,
+  'mental-calculus-hard': mentalHardGame,
   'example-game': exampleGame,
 };
 

@@ -593,3 +593,71 @@ body {
   border-color: #c62828;
   color: #fff;
 }
+
+/* Mental Calculus Hard */
+.mch-display {
+  font-size: 2.2em;
+  font-weight: 700;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 28px;
+  min-width: 160px;
+  text-align: center;
+  margin: 0 auto 20px;
+  letter-spacing: 0.04em;
+  display: inline-block;
+}
+
+.mch-display--wrong {
+  border-color: #c62828;
+  color: #ef5350;
+}
+
+.mch-placeholder {
+  opacity: 0.3;
+}
+
+.mch-numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.mch-key {
+  aspect-ratio: 1.3;
+  background: var(--surface);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1.3em;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mch-key:hover {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+
+.mch-key--back {
+  font-size: 1em;
+}
+
+.mch-key--submit {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.mch-key--submit:hover {
+  opacity: 0.85;
+  background: var(--accent);
+}
