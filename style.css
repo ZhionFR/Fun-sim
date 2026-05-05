@@ -545,3 +545,51 @@ body {
   font-weight: 600;
   margin-bottom: 16px;
 }
+
+/* Mental Calculus */
+.mc-problem {
+  font-size: 2.8em;
+  font-weight: 700;
+  margin-bottom: 28px;
+  letter-spacing: 0.01em;
+}
+
+.mc-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 280px;
+  margin: 0 auto 20px;
+}
+
+.mc-choice-btn {
+  background: var(--surface);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 20px;
+  font-size: 1.1em;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.mc-choice-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+
+.mc-choice-btn:disabled { cursor: default; }
+
+.mc-choice-btn.mc-correct {
+  background: #2e7d32;
+  border-color: #2e7d32;
+  color: #fff;
+}
+
+.mc-choice-btn.mc-wrong {
+  background: #c62828;
+  border-color: #c62828;
+  color: #fff;
+}
