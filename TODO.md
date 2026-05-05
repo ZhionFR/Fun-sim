@@ -1,11 +1,5 @@
 # Current games
 
-## OSPAN
-
-Fix mental calculus not failing
-Add recap of mental calculus and answers at round end
-
-
 # New games
 
 ### Mental calculus
