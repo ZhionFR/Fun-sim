@@ -6,6 +6,7 @@ export const description = 'Solve equations, memorise letters, recall them in or
 const POOL = ['F', 'H', 'J', 'K', 'L', 'N', 'P', 'Q', 'R', 'S', 'T', 'Y'];
 const LETTER_MS = 1000;
 const EQUATION_MS = 2000;
+const BUTTON_MS = 3000;
 
 let el = null;
 let equationTimer = null;
@@ -62,29 +63,57 @@ function renderEquation() {
   const eq = equations[round];
   el.innerHTML = `
     <div class="ospan-meta">Item ${round + 1} of ${span}</div>
-    <div class="ospan-eq">${eq.text}</div>
-    <p class="ospan-eq-label">Is this correct?</p>
+    <div class="ospan-eq" id="ospan-eq-text">${eq.text}</div>
+    <p class="ospan-eq-label" id="ospan-eq-label">Is this correct?</p>
     <div class="ospan-tf-row">
       <button class="btn ospan-tf ospan-tf--true"  id="ospan-true">TRUE</button>
       <button class="btn ospan-tf ospan-tf--false" id="ospan-false">FALSE</button>
     </div>
     <div class="ospan-timer-bar">
-      <div class="ospan-timer-fill" id="ospan-timer-fill"></div>
+      <div class="ospan-timer-fill" id="ospan-timer-fill-1"></div>
+    </div>
+    <div class="ospan-timer-bar" id="ospan-timer-bar-2" style="visibility:hidden;margin-top:6px">
+      <div class="ospan-timer-fill" id="ospan-timer-fill-2" style="width:100%"></div>
     </div>
   `;
   el.querySelector('#ospan-true').addEventListener('click',  () => answerEq(true));
   el.querySelector('#ospan-false').addEventListener('click', () => answerEq(false));
 
-  const fill = el.querySelector('#ospan-timer-fill');
+  const fill1 = el.querySelector('#ospan-timer-fill-1');
   const start = performance.now();
   equationTimer = setInterval(() => {
+    if (!el) { clearInterval(equationTimer); return; }
     const elapsed = performance.now() - start;
     const ratio = Math.max(0, 1 - elapsed / EQUATION_MS);
-    fill.style.width = `${ratio * 100}%`;
+    if (fill1) fill1.style.width = `${ratio * 100}%`;
     if (elapsed >= EQUATION_MS) {
       clearInterval(equationTimer);
       equationTimer = null;
-      answerEq(false);
+      transitionToButtonPhase();
+    }
+  }, 50);
+}
+
+function transitionToButtonPhase() {
+  const eqText = el.querySelector('#ospan-eq-text');
+  const eqLabel = el.querySelector('#ospan-eq-label');
+  if (eqText) eqText.style.visibility = 'hidden';
+  if (eqLabel) eqLabel.style.visibility = 'hidden';
+
+  const bar2 = el.querySelector('#ospan-timer-bar-2');
+  if (bar2) bar2.style.visibility = 'visible';
+
+  const fill2 = el.querySelector('#ospan-timer-fill-2');
+  const start = performance.now();
+  equationTimer = setInterval(() => {
+    if (!el) { clearInterval(equationTimer); return; }
+    const elapsed = performance.now() - start;
+    const ratio = Math.max(0, 1 - elapsed / BUTTON_MS);
+    if (fill2) fill2.style.width = `${ratio * 100}%`;
+    if (elapsed >= BUTTON_MS) {
+      clearInterval(equationTimer);
+      equationTimer = null;
+      renderFail();
     }
   }, 50);
 }
@@ -194,9 +223,29 @@ function startSpan() {
 }
 
 function answerEq(answer) {
+  if (phase !== 'equation') return;
   if (equationTimer) { clearInterval(equationTimer); equationTimer = null; }
   equations[round].userAnswer = answer;
+  if (answer !== equations[round].answer) {
+    renderFail();
+    return;
+  }
   renderLetter();
+}
+
+function renderFail() {
+  phase = 'fail';
+  el.innerHTML = `
+    <p class="chimp-result chimp-result--fail">Wrong!</p>
+    <p class="chimp-hint" style="margin-bottom:24px">You reached span <strong>${span}</strong>.</p>
+    <button class="btn" id="ospan-retry">Try Again</button>
+  `;
+  el.querySelector('#ospan-retry').addEventListener('click', () => {
+    span = 2;
+    totalScore = 0;
+    maxPossible = 0;
+    renderIdle();
+  });
 }
 
 function submitRecall() {
