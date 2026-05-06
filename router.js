@@ -7,6 +7,7 @@ import * as ordseqGame from './games/ordseq.js';
 import * as lightsoutGame from './games/lightsout.js';
 import * as mentalGame from './games/mental.js';
 import * as mentalHardGame from './games/mental-hard.js';
+import * as snakeCoupleGame from './games/snake-couple.js';
 
 const GAMES = {
   'chimp-test': chimpGame,
@@ -17,6 +18,7 @@ const GAMES = {
   'lights-out': lightsoutGame,
   'mental-calculus': mentalGame,
   'mental-calculus-hard': mentalHardGame,
+  'snake-couple': snakeCoupleGame,
   'example-game': exampleGame,
 };
 
