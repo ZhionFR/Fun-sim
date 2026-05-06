@@ -116,6 +116,13 @@ function tickSnake(snake) {
   }
 }
 
+function showRestartBtn() {
+  const btn = el && el.querySelector('#snk-start');
+  if (!btn) return;
+  btn.textContent = 'Restart (Space)';
+  btn.style.display = '';
+}
+
 function loop(ts) {
   if (ts - lastTick >= TICK_MS) {
     lastTick = ts;
@@ -127,6 +134,8 @@ function loop(ts) {
 
   if (snakes.some(s => s.alive)) {
     animFrame = requestAnimationFrame(loop);
+  } else {
+    showRestartBtn();
   }
 }
 
@@ -135,9 +144,16 @@ function setDir(snake, dx, dy) {
   snake.nextDir = { x: dx, y: dy };
 }
 
+function isGameOver() {
+  return snakes.length > 0 && snakes.every(s => !s.alive);
+}
+
 function onKey(e) {
+  if (e.key === ' ') {
+    if (isGameOver()) { e.preventDefault(); startGame(); }
+    return;
+  }
   if (!snakes.length) return;
-  if (e.key === ' ') { e.preventDefault(); startGame(); return; }
   const [L, R] = snakes;
 
   switch (e.key) {
@@ -168,6 +184,9 @@ function startGame() {
     makeSnake(canvases[1], { head: '#e05252', body: '#f07a7a' }),
   ];
   updateScore();
+
+  const btn = el && el.querySelector('#snk-start');
+  if (btn) btn.style.display = 'none';
 
   let count = 3;
   drawCountdown(count);

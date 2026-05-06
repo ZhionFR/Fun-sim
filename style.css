@@ -668,7 +668,8 @@ body {
   display: flex;
   gap: 24px;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .snk-panel {
