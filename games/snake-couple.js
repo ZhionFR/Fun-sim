@@ -103,6 +103,7 @@ function loop(ts) {
   if (ts - lastTick >= TICK_MS) {
     lastTick = ts;
     snakes.forEach(tickSnake);
+    if (snakes.some(s => !s.alive)) snakes.forEach(s => { s.alive = false; });
   }
   snakes.forEach(draw);
 
@@ -118,6 +119,7 @@ function setDir(snake, dx, dy) {
 
 function onKey(e) {
   if (!snakes.length) return;
+  if (e.key === ' ') { e.preventDefault(); startGame(); return; }
   const [L, R] = snakes;
 
   switch (e.key) {
