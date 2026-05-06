@@ -691,7 +691,21 @@ body {
 }
 
 .snk-btn {
-  margin-top: 16px;
+  margin-top: 8px;
+}
+
+.snk-score-wrap {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+.snk-score {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-left: 4px;
 }
 
 .snk-dpad {

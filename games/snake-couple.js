@@ -9,6 +9,7 @@ const TICK_MS = 120;
 
 let el = null;
 let animFrame = null;
+let countdownTimer = null;
 let lastTick = 0;
 let snakes = [];
 
@@ -56,11 +57,6 @@ function draw(snake) {
     ctx.fillRect(c.x * CELL + 1, c.y * CELL + 1, CELL - 2, CELL - 2);
   });
 
-  ctx.fillStyle = '#e0e0f0';
-  ctx.font = '12px monospace';
-  ctx.textAlign = 'left';
-  ctx.fillText(`Score: ${score}`, 4, 14);
-
   if (!alive) {
     ctx.fillStyle = 'rgba(0,0,0,0.65)';
     ctx.fillRect(0, 0, W, H);
@@ -72,6 +68,27 @@ function draw(snake) {
     ctx.font = '14px sans-serif';
     ctx.fillText(`Score: ${score}`, W / 2, H / 2 + 14);
   }
+}
+
+function drawCountdown(n) {
+  snakes.forEach(({ ctx, canvas }) => {
+    const W = canvas.width;
+    const H = canvas.height;
+    draw(snakes.find(s => s.canvas === canvas));
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#e0e0f0';
+    ctx.font = 'bold 72px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(n, W / 2, H / 2);
+    ctx.textBaseline = 'alphabetic';
+  });
+}
+
+function updateScore() {
+  const el2 = el && el.querySelector('#snk-score');
+  if (el2) el2.textContent = `(${snakes[0].score};${snakes[1].score})`;
 }
 
 function tickSnake(snake) {
@@ -106,6 +123,7 @@ function loop(ts) {
     if (snakes.some(s => !s.alive)) snakes.forEach(s => { s.alive = false; });
   }
   snakes.forEach(draw);
+  updateScore();
 
   if (snakes.some(s => s.alive)) {
     animFrame = requestAnimationFrame(loop);
@@ -142,12 +160,29 @@ function onKey(e) {
 
 function startGame() {
   if (animFrame) { cancelAnimationFrame(animFrame); animFrame = null; }
+  if (countdownTimer) { clearTimeout(countdownTimer); countdownTimer = null; }
+
   const canvases = el.querySelectorAll('.snk-canvas');
   snakes = [
     makeSnake(canvases[0], { head: '#5a52e0', body: '#7a72f0' }),
     makeSnake(canvases[1], { head: '#e05252', body: '#f07a7a' }),
   ];
-  animFrame = requestAnimationFrame(ts => { lastTick = ts; loop(ts); });
+  updateScore();
+
+  let count = 3;
+  drawCountdown(count);
+
+  function step() {
+    count--;
+    if (count <= 0) {
+      countdownTimer = null;
+      animFrame = requestAnimationFrame(ts => { lastTick = ts; loop(ts); });
+    } else {
+      drawCountdown(count);
+      countdownTimer = setTimeout(step, 500);
+    }
+  }
+  countdownTimer = setTimeout(step, 500);
 }
 
 function dpad(side) {
@@ -193,6 +228,7 @@ export function mount(container) {
         ${dpad(1)}
       </div>
     </div>
+    <div class="snk-score-wrap">Score <span id="snk-score" class="snk-score">(0;0)</span></div>
     <button class="btn snk-btn" id="snk-start">Start</button>
   `;
 
@@ -208,6 +244,7 @@ export function mount(container) {
 export function unmount() {
   document.removeEventListener('keydown', onKey);
   if (animFrame) { cancelAnimationFrame(animFrame); animFrame = null; }
+  if (countdownTimer) { clearTimeout(countdownTimer); countdownTimer = null; }
   snakes = [];
   el = null;
 }
