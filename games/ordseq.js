@@ -1,3 +1,4 @@
+import { getHS, trySetHS } from './highscore.js';
 export const icon = '🔢';
 export const title = 'Ordered Sequence Memory';
 export const description = 'Each level extends the previous sequence by one square — remember it all from the start.';
@@ -20,17 +21,20 @@ function gridSize() {
 // ── render ───────────────────────────────────────────────────────────────────
 
 function renderIdle() {
+  const hs = getHS('ordered-sequence');
   el.innerHTML = `
     <p class="vismem-hint">Each round replays the full sequence with one new square added.<br>Repeat the entire order by clicking.</p>
+    ${hs ? `<p class="hs-line">Best: level ${hs}</p>` : ''}
     <button class="btn" id="ordseq-start">Start</button>
   `;
   el.querySelector('#ordseq-start').addEventListener('click', startLevel);
 }
 
 function renderFail() {
+  const isRecord = trySetHS('ordered-sequence', level);
   el.innerHTML = `
     <p class="chimp-result chimp-result--fail">Wrong!</p>
-    <p class="chimp-hint" style="margin-bottom:24px">You reached level <strong>${level}</strong>.</p>
+    <p class="chimp-hint" style="margin-bottom:24px">You reached level <strong>${level}</strong>.${isRecord ? ' <strong>New record!</strong>' : ''}</p>
     <button class="btn" id="ordseq-retry">Try Again</button>
   `;
   el.querySelector('#ordseq-retry').addEventListener('click', () => {

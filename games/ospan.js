@@ -1,3 +1,4 @@
+import { getHS, trySetHS } from './highscore.js';
 export const icon = '🧮';
 export const title = 'Operation Span';
 export const description = 'Solve equations, memorise letters, recall them in order.';
@@ -47,11 +48,13 @@ function makeEquation() {
 
 function renderIdle() {
   phase = 'idle';
+  const hs = getHS('ospan');
   el.innerHTML = `
     <p class="ospan-hint">
       Each turn: solve an equation (TRUE / FALSE), then memorise a letter.<br>
       When the round ends, recall all the letters <strong>in order</strong>.
     </p>
+    ${hs ? `<p class="hs-line">Best: span ${hs}</p>` : ''}
     ${totalScore > 0 ? `<p class="ospan-score">Score so far: ${totalScore} / ${maxPossible}</p>` : ''}
     <button class="btn" id="ospan-start">Start — Span ${span}</button>
   `;
@@ -235,9 +238,10 @@ function answerEq(answer) {
 
 function renderFail() {
   phase = 'fail';
+  const isRecord = trySetHS('ospan', span);
   el.innerHTML = `
     <p class="chimp-result chimp-result--fail">Wrong!</p>
-    <p class="chimp-hint" style="margin-bottom:24px">You reached span <strong>${span}</strong>.</p>
+    <p class="chimp-hint" style="margin-bottom:24px">You reached span <strong>${span}</strong>.${isRecord ? ' <strong>New record!</strong>' : ''}</p>
     <button class="btn" id="ospan-retry">Try Again</button>
   `;
   el.querySelector('#ospan-retry').addEventListener('click', () => {

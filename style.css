@@ -695,6 +695,19 @@ body {
   margin-top: 8px;
 }
 
+.hs-line {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.game-card-hs {
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
 .snk-score-wrap {
   margin-top: 14px;
   font-size: 0.85rem;

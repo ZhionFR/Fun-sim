@@ -1,3 +1,4 @@
+import { getHS, trySetHS } from './highscore.js';
 export const icon = '🧠';
 export const title = 'Mental Calculus';
 export const description = 'Multiply two numbers in your head and pick the right answer before time runs out.';
@@ -44,8 +45,10 @@ function makeQuestion() {
 
 function renderIdle() {
   phase = 'idle';
+  const hs = getHS('mental-calculus');
   el.innerHTML = `
     <p class="vismem-hint">Multiply the two numbers and pick the correct answer<br>before the 5-second timer runs out.</p>
+    ${hs ? `<p class="hs-line">Best: ${hs} correct</p>` : ''}
     ${score > 0 ? `<p class="ospan-score">Score: ${score}</p>` : ''}
     <button class="btn" id="mc-start">Start</button>
   `;
@@ -89,11 +92,12 @@ function renderFail(wrongBtn) {
   const bar = el.querySelector('.ospan-timer-bar');
   if (bar) bar.style.visibility = 'hidden';
 
+  const isRecord = trySetHS('mental-calculus', score);
   setTimeout(() => {
     if (!el) return;
     el.innerHTML = `
       <p class="chimp-result chimp-result--fail">${wrongBtn ? 'Wrong!' : 'Time up!'}</p>
-      <p class="chimp-hint" style="margin-bottom:24px">You scored <strong>${score}</strong>.</p>
+      <p class="chimp-hint" style="margin-bottom:24px">You scored <strong>${score}</strong>.${isRecord ? ' <strong>New record!</strong>' : ''}</p>
       <button class="btn" id="mc-retry">Try Again</button>
     `;
     el.querySelector('#mc-retry').addEventListener('click', () => {

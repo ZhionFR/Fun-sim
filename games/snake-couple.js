@@ -1,3 +1,4 @@
+import { getHS, trySetHS } from './highscore.js';
 export const icon = '🐍';
 export const title = 'Snake Couple';
 export const description = 'Two snakes, side by side. Left: WASD / ZQSD — Right: IJKL / Arrow keys.';
@@ -117,10 +118,14 @@ function tickSnake(snake) {
 }
 
 function showRestartBtn() {
+  const total = snakes[0].score + snakes[1].score;
+  const isRecord = trySetHS('snake-couple', total);
   const btn = el && el.querySelector('#snk-start');
   if (!btn) return;
   btn.textContent = 'Restart (Space)';
   btn.style.display = '';
+  const hsEl = el && el.querySelector('#snk-hs');
+  if (hsEl) hsEl.textContent = `Best: ${getHS('snake-couple')}${isRecord ? ' 🏆' : ''}`;
 }
 
 function loop(ts) {
@@ -247,7 +252,7 @@ export function mount(container) {
         ${dpad(1)}
       </div>
     </div>
-    <div class="snk-score-wrap">Score <span id="snk-score" class="snk-score">(0;0)</span></div>
+    <div class="snk-score-wrap">Score <span id="snk-score" class="snk-score">(0;0)</span> &nbsp; <span id="snk-hs" class="snk-label">${getHS('snake-couple') ? `Best: ${getHS('snake-couple')}` : ''}</span></div>
     <button class="btn snk-btn" id="snk-start">Start</button>
   `;
 

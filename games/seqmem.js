@@ -1,3 +1,4 @@
+import { getHS, trySetHS } from './highscore.js';
 export const icon = '🔁';
 export const title = 'Sequence Memory';
 export const description = 'Squares flash one by one — repeat the sequence in order.';
@@ -23,17 +24,20 @@ function gridSize(lvl) {
 // ── render ───────────────────────────────────────────────────────────────────
 
 function renderIdle() {
+  const hs = getHS('sequence-memory');
   el.innerHTML = `
     <p class="vismem-hint">Squares will flash in sequence.<br>Repeat the order by clicking them.</p>
+    ${hs ? `<p class="hs-line">Best: level ${hs}</p>` : ''}
     <button class="btn" id="seqmem-start">Start — Level ${level}</button>
   `;
   el.querySelector('#seqmem-start').addEventListener('click', startLevel);
 }
 
 function renderFail() {
+  const isRecord = trySetHS('sequence-memory', level);
   el.innerHTML = `
     <p class="chimp-result chimp-result--fail">Wrong!</p>
-    <p class="chimp-hint" style="margin-bottom:24px">You reached level <strong>${level}</strong>.</p>
+    <p class="chimp-hint" style="margin-bottom:24px">You reached level <strong>${level}</strong>.${isRecord ? ' <strong>New record!</strong>' : ''}</p>
     <button class="btn" id="seqmem-retry">Try Again</button>
   `;
   el.querySelector('#seqmem-retry').addEventListener('click', () => {

@@ -1,3 +1,4 @@
+import { getHS, trySetHS } from './highscore.js';
 export const icon = '💡';
 export const title = 'Lights Out';
 export const description = 'Turn off all the lights. Clicking a cell toggles it and its direct neighbours.';
@@ -37,8 +38,10 @@ function generatePuzzle(s) {
 // ── render ────────────────────────────────────────────────────────────────────
 
 function renderIdle() {
+  const hs = getHS('lights-out');
   el.innerHTML = `
     <p class="vismem-hint">Turn off all the lights by clicking cells.<br>Each click toggles that cell and its direct neighbours.</p>
+    ${hs ? `<p class="hs-line">Best: level ${hs}</p>` : ''}
     <button class="btn" id="lo-start">Start</button>
   `;
   el.querySelector('#lo-start').addEventListener('click', startLevel);
@@ -61,9 +64,10 @@ function renderGrid() {
 }
 
 function renderWin() {
+  const isRecord = trySetHS('lights-out', level);
   el.innerHTML = `
     <p class="chimp-result chimp-result--win">Solved!</p>
-    <p class="chimp-hint" style="margin-bottom:24px">Level ${level} cleared in <strong>${moves}</strong> move${moves !== 1 ? 's' : ''}.</p>
+    <p class="chimp-hint" style="margin-bottom:24px">Level ${level} cleared in <strong>${moves}</strong> move${moves !== 1 ? 's' : ''}.${isRecord ? ' <strong>New record!</strong>' : ''}</p>
     <button class="btn" id="lo-next">Next Level &rarr;</button>
   `;
   el.querySelector('#lo-next').addEventListener('click', () => {

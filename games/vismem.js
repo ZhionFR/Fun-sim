@@ -1,3 +1,4 @@
+import { getHS, trySetHS } from './highscore.js';
 export const icon = '🧩';
 export const title = 'Visual Memory';
 export const description = 'Squares flash on a grid — remember which ones lit up and click them all.';
@@ -31,17 +32,20 @@ function shuffle(arr) {
 // ── render ───────────────────────────────────────────────────────────────────
 
 function renderIdle() {
+  const hs = getHS('visual-memory');
   el.innerHTML = `
     <p class="vismem-hint">Squares will briefly flash on the grid.<br>Click every square that was lit — order doesn't matter.</p>
+    ${hs ? `<p class="hs-line">Best: level ${hs}</p>` : ''}
     <button class="btn" id="vismem-start">Start — Level ${level}</button>
   `;
   el.querySelector('#vismem-start').addEventListener('click', startLevel);
 }
 
 function renderFail() {
+  const isRecord = trySetHS('visual-memory', level);
   el.innerHTML = `
     <p class="chimp-result chimp-result--fail">Wrong!</p>
-    <p class="chimp-hint" style="margin-bottom:24px">You reached level <strong>${level}</strong>.</p>
+    <p class="chimp-hint" style="margin-bottom:24px">You reached level <strong>${level}</strong>.${isRecord ? ' <strong>New record!</strong>' : ''}</p>
     <button class="btn" id="vismem-retry">Try Again</button>
   `;
   el.querySelector('#vismem-retry').addEventListener('click', () => {

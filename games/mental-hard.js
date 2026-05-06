@@ -1,3 +1,4 @@
+import { getHS, trySetHS } from './highscore.js';
 export const icon = '🔥';
 export const title = 'Mental Calculus (Hard)';
 export const description = 'Type the product of two numbers. 30 seconds on the clock — answer as many as you can.';
@@ -26,8 +27,10 @@ function makeQuestion() {
 
 function renderIdle() {
   phase = 'idle';
+  const hs = getHS('mental-calculus-hard');
   el.innerHTML = `
     <p class="vismem-hint">Type the product of two numbers.<br>You have <strong>30 seconds</strong> — answer as many as you can!</p>
+    ${hs ? `<p class="hs-line">Best: ${hs} correct</p>` : ''}
     ${score > 0 ? `<p class="ospan-score">Score: ${score}</p>` : ''}
     <button class="btn" id="mch-start">Start</button>
   `;
@@ -76,12 +79,13 @@ function renderFail(timeout) {
     }
   }
 
+  const isRecord = trySetHS('mental-calculus-hard', score);
   setTimeout(() => {
     if (!el) return;
     el.innerHTML = `
       <p class="chimp-result chimp-result--fail">${timeout ? 'Time up!' : 'Wrong!'}</p>
       ${!timeout ? `<p class="chimp-hint">Answer was <strong>${currentQuestion.correct}</strong></p>` : ''}
-      <p class="chimp-hint" style="margin-bottom:24px">You scored <strong>${score}</strong>.</p>
+      <p class="chimp-hint" style="margin-bottom:24px">You scored <strong>${score}</strong>.${isRecord ? ' <strong>New record!</strong>' : ''}</p>
       <button class="btn" id="mch-retry">Try Again</button>
     `;
     el.querySelector('#mch-retry').addEventListener('click', () => {

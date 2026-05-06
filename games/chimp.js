@@ -1,3 +1,4 @@
+import { getHS, trySetHS } from './highscore.js';
 export const icon = '🐒';
 export const title = 'Chimp Test';
 export const description = 'Numbers flash on a grid — click them in order. After you click 1, the rest disappear!';
@@ -32,17 +33,20 @@ export function mount(mountEl) {
   // ── render ────────────────────────────────────────────────────────────────
 
   function renderIdle() {
+    const hs = getHS('chimp-test');
     el.innerHTML = `
       <p class="chimp-hint">Numbers will appear on the grid.<br>Click them in ascending order starting from <strong>1</strong>.</p>
+      ${hs ? `<p class="hs-line">Best: level ${hs}</p>` : ''}
       <button class="btn" id="chimp-start">Start — Level ${level}</button>
     `;
     el.querySelector('#chimp-start').addEventListener('click', startLevel);
   }
 
   function renderFail() {
+    const isRecord = trySetHS('chimp-test', level);
     el.innerHTML = `
       <p class="chimp-result chimp-result--fail">Wrong!</p>
-      <p class="chimp-hint" style="margin-bottom:24px">You reached level <strong>${level}</strong>.</p>
+      <p class="chimp-hint" style="margin-bottom:24px">You reached level <strong>${level}</strong>.${isRecord ? ' <strong>New record!</strong>' : ''}</p>
       <button class="btn" id="chimp-retry">Try Again</button>
     `;
     el.querySelector('#chimp-retry').addEventListener('click', () => {

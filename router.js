@@ -8,6 +8,7 @@ import * as lightsoutGame from './games/lightsout.js';
 import * as mentalGame from './games/mental.js';
 import * as mentalHardGame from './games/mental-hard.js';
 import * as snakeCoupleGame from './games/snake-couple.js';
+import { getHS } from './games/highscore.js';
 
 const GAMES = {
   'chimp-test': chimpGame,
@@ -35,13 +36,17 @@ function renderHome() {
   breadcrumb.textContent = '';
   document.title = 'Mental Gym';
 
-  const cards = Object.entries(GAMES).map(([id, game]) => `
-    <a class="game-card" href="#${id}">
-      <div class="game-card-icon">${game.icon}</div>
-      <div class="game-card-title">${game.title}</div>
-      <div class="game-card-desc">${game.description}</div>
-    </a>
-  `).join('');
+  const cards = Object.entries(GAMES).map(([id, game]) => {
+    const hs = getHS(id);
+    return `
+      <a class="game-card" href="#${id}">
+        <div class="game-card-icon">${game.icon}</div>
+        <div class="game-card-title">${game.title}</div>
+        <div class="game-card-desc">${game.description}</div>
+        ${hs ? `<div class="game-card-hs">Best: ${hs}</div>` : ''}
+      </a>
+    `;
+  }).join('');
 
   content.innerHTML = `
     <div class="home-title">Mental Gym</div>
