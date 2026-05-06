@@ -148,6 +148,31 @@ function startGame() {
   animFrame = requestAnimationFrame(ts => { lastTick = ts; loop(ts); });
 }
 
+function dpad(side) {
+  return `
+    <div class="snk-dpad" data-side="${side}">
+      <button class="snk-dp snk-dp--up"   data-dx="0"  data-dy="-1">&#8593;</button>
+      <button class="snk-dp snk-dp--left"  data-dx="-1" data-dy="0">&#8592;</button>
+      <button class="snk-dp snk-dp--down"  data-dx="0"  data-dy="1">&#8595;</button>
+      <button class="snk-dp snk-dp--right" data-dx="1"  data-dy="0">&#8594;</button>
+    </div>
+  `;
+}
+
+function bindDpad() {
+  el.querySelectorAll('.snk-dp').forEach(btn => {
+    const handler = e => {
+      e.preventDefault();
+      if (!snakes.length) return;
+      const side = btn.closest('.snk-dpad').dataset.side;
+      const snake = side === '0' ? snakes[0] : snakes[1];
+      setDir(snake, +btn.dataset.dx, +btn.dataset.dy);
+    };
+    btn.addEventListener('touchstart', handler, { passive: false });
+    btn.addEventListener('mousedown', handler);
+  });
+}
+
 export function mount(container) {
   el = container;
   const W = COLS * CELL;
@@ -156,12 +181,14 @@ export function mount(container) {
   el.innerHTML = `
     <div class="snk-wrap">
       <div class="snk-panel">
-        <div class="snk-label">Player 1 &mdash; WASD / ZQSD</div>
+        <div class="snk-label">Snake 1 &mdash; WASD / ZQSD</div>
         <canvas class="snk-canvas" width="${W}" height="${H}"></canvas>
+        ${dpad(0)}
       </div>
       <div class="snk-panel">
-        <div class="snk-label">Player 2 &mdash; IJKL / &#8593;&#8595;&#8592;&#8594;</div>
+        <div class="snk-label">Snake 2 &mdash; IJKL / &#8593;&#8595;&#8592;&#8594;</div>
         <canvas class="snk-canvas" width="${W}" height="${H}"></canvas>
+        ${dpad(1)}
       </div>
     </div>
     <button class="btn snk-btn" id="snk-start">Start</button>
@@ -172,6 +199,7 @@ export function mount(container) {
     el.querySelector('#snk-start').textContent = 'Restart';
   });
 
+  bindDpad();
   document.addEventListener('keydown', onKey);
 }
 
