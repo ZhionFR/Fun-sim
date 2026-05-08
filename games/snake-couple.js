@@ -1,5 +1,5 @@
 import { getHS, trySetHS } from './highscore.js';
-export const icon = '🐍';
+export const icon = `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8c0 0 2.5-3 5.5 0s5.5 0 5.5 0 2.5-3 5.5 0"/><path d="M3.5 16c0 0 2.5-3 5.5 0s5.5 0 5.5 0 2.5-3 5.5 0"/></svg>`;
 export const title = 'Snake Couple';
 export const description = 'Two snakes, side by side. Left: WASD / ZQSD — Right: IJKL / Arrow keys.';
 

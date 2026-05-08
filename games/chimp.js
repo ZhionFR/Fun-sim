@@ -1,5 +1,5 @@
 import { getHS, trySetHS } from './highscore.js';
-export const icon = '🐒';
+export const icon = `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><circle cx="5" cy="10" r="3"/><circle cx="19" cy="10" r="3"/><path d="M9 14a3 3 0 0 0 6 0"/><circle cx="10" cy="11" r="0.5" fill="currentColor" stroke="none"/><circle cx="14" cy="11" r="0.5" fill="currentColor" stroke="none"/></svg>`;
 export const title = 'Chimp Test';
 export const description = 'Numbers flash on a grid — click them in order. After you click 1, the rest disappear!';
 

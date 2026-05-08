@@ -134,7 +134,8 @@ body {
   transform: translateY(-2px);
 }
 
-.game-card-icon { font-size: 1.8em; margin-bottom: 10px; }
+.game-card-icon { margin-bottom: 10px; color: var(--accent); }
+.game-card-icon svg { display: block; }
 .game-card-title { font-weight: 600; margin-bottom: 4px; }
 .game-card-desc { color: var(--text-muted); font-size: 0.85em; }
 

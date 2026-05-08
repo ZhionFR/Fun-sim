@@ -1,4 +1,4 @@
-export const icon = '🎯';
+export const icon = `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`;
 export const title = 'Example Game';
 export const description = 'A placeholder. Click the button!';
 
